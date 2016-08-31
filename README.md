@@ -7,14 +7,14 @@ PPC64 Altivec instructions are provided in vec128int.h
 Below are some integer SSE2 instructions I've managed to port to Altivec using IBM's provided veclib-1.0.4
 For big-endian platforms only the shift left/right operations are reversed. 
 
-# Integer
+# Vector Integer Operations
 
 Load
-| SSE2 | Altivec |
-|-----------------|-------------|
-| _mm_load_si128 | vec_load1q |
+| SSE2            | Altivec     |
+|:----------------|:------------|
+| _mm_load_si128  | vec_load1q  |
 | _mm_loadu_si128 | vec_loadu1q |
-| _mm_loadl_epi64 |  |
+| _mm_loadl_epi64 |             |
 
 Set
 | SSE2 | Altivec |
