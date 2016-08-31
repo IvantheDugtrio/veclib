@@ -11,10 +11,15 @@ For big-endian platforms only the shift left/right operations are reversed.
 
 Load
 | SSE2            | Altivec     |
+
 |:----------------|:------------|
+
 | _mm_load_si128  | vec_load1q  |
+
 | _mm_loadu_si128 | vec_loadu1q |
+
 | _mm_loadl_epi64 |             |
+
 
 Set
 | SSE2 | Altivec |
