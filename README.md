@@ -2,9 +2,11 @@
 Vector library for porting SSE2 instructions to other architectures
 
 Credit to yhcheng for first providing a PPC64 port of the Burrows-Wheeler Aligner which helped me expand on the instructions. 
-PPC64 Altivec instructions are provided in vec128int.h
+PPC64 Altivec instructions are provided in vec128int.h which depends on veclib_types.h. 
 
-Below are some integer SSE2 instructions I've managed to port to Altivec using IBM's provided veclib-1.0.4
+The IBM POWER vector intrinsinc functions library can be downloaded from the [IBM developerWorks website](https://www.ibm.com/developerworks/community/groups/community/powerveclib/).
+
+Below are some integer SSE2 instructions I've managed to port to Altivec using veclib-1.0.4
 For big-endian platforms only the shift left/right operations are reversed. 
 
 ## Vector Integer Operations
