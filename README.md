@@ -2,65 +2,66 @@
 Vector library for porting SSE2 instructions to other architectures
 
 Credit to yhcheng for first providing a PPC64 port of the Burrows-Wheeler Aligner which helped me expand on the instructions. 
-PPC64 Altivec instructions are provided in vec128int.h which depends on veclib_types.h. 
+PPC64 Altivec instructions are provided in vec128int.h which depends on veclib_types.h.
 
 The IBM POWER vector intrinsinc functions library can be downloaded from the [IBM developerWorks website](https://www.ibm.com/developerworks/community/groups/community/powerveclib/).
 
-Below are some integer SSE2 instructions I've managed to port to Altivec using veclib-1.0.4
-For big-endian platforms only the shift left/right operations are reversed. 
+Below are some integer SSE2 instructions I've managed to port to Altivec using veclib-1.0.4. 
+
+For big-endian platforms only the shift left/right operations are reversed.
 
 ## Vector Integer Operations
 
 ### Load
-| veclib | SSE2     | Altivec          | Description                                                    |
-| --- | ----------- | ---------------- | -------------------------------------------------------------- |
-| | _mm_load_si128 (__m128i const* mem_addr) | vec_load1q       | Load 128 bits of integer data, aligned                         |
-| | _mm_loadu_si128 (__m128i const* mem_addr) | vec_loadu1q      | Load 128 bits of integer data, unaligned                       |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_load_si128 (__m128i const* mem_addr) | vec_load1q | Load 128 bits of integer data, aligned |
+| | _mm_loadu_si128 (__m128i const* mem_addr) | vec_loadu1q | Load 128 bits of integer data, unaligned |
 | | _mm_loadl_epi64 (__m128i const* mem_addr) | vec_loadlower1sd | Load 64-bits of integer data to lower part and zero upper part |
 
 ### Set
-| veclib | SSE2       | Altivec            | Description                                           |
-| --- | ------------- | ------------------ | ----------------------------------------------------- |
-| | _mm_setzero_si128 () | vec_zero1q         | Set 128 integer bits to zero                          |
-| | _mm_set1_epi8 (char a) | vec_splat16sb      | Splat 8-bit char to 16 8-bit chars                    |
-| | _mm_set1_epi16 (short a) | vec_splat8sh       | Splat 16-bit short to 8 16-bit shorts                 |
-| | _mm_set1_epi32 (int a) | vec_splat4sw       | Splat 32-bit ints to 4 32-bit ints                    |
-| | _mm_set1_epi64 (__m64 a) | vec_splat2sd       | Splat 64-bit long long to 2 64-bit long longs         |
-| | _mm_set_epi8 (char a) | vec_set16sb        | Set 16 8-bit chars                                    |
-| | _mm_set_epi16 (short a) | vec_set8sh         | Set 8 16-bits shorts                                  |
-| | _mm_set_epi32 (int a) | vec_set4sw         | Set 4 32-bit ints                                     |
-| | _mm_set_epi64 (__m64 a) | vec_set2sd         | Set 2 64-bit long longs                               |
-| | _mm_setr_epi8 (char a) | vec_setreverse16sb | Set 16 8-bit chars reversed                           |
-| | _mm_setr_epi16 (short a) | vec_setreverse8sh  | Set 8 16-bit shorts reversed                          |
-| | _mm_setr_epi32 (int a) | vec_setreverse4sw  | Set 4 32-bit ints reversed                            |
-| | _mm_setr_epi64 (__m64 a) | vec_setreverse2sd  | Set 2 64-bit long longs reversed                      |
-| | _mm_movpi64_epi64 (__m64 a) | vec_Zerouppersd    | Set lower 64-bits of integer data and zero upper part |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_setzero_si128 () | vec_zero1q | Set 128 integer bits to zero |
+| | _mm_set1_epi8 (char a) | vec_splat16sb | Splat 8-bit char to 16 8-bit chars |
+| | _mm_set1_epi16 (short a) | vec_splat8sh | Splat 16-bit short to 8 16-bit shorts |
+| | _mm_set1_epi32 (int a) | vec_splat4sw | Splat 32-bit ints to 4 32-bit ints |
+| | _mm_set1_epi64 (__m64 a) | vec_splat2sd | Splat 64-bit long long to 2 64-bit long longs |
+| | _mm_set_epi8 (char a) | vec_set16sb | Set 16 8-bit chars |
+| | _mm_set_epi16 (short a) | vec_set8sh | Set 8 16-bits shorts |
+| | _mm_set_epi32 (int a) | vec_set4sw | Set 4 32-bit ints |
+| | _mm_set_epi64 (__m64 a) | vec_set2sd | Set 2 64-bit long longs |
+| | _mm_setr_epi8 (char a) | vec_setreverse16sb | Set 16 8-bit chars reversed |
+| | _mm_setr_epi16 (short a) | vec_setreverse8sh | Set 8 16-bit shorts reversed |
+| | _mm_setr_epi32 (int a) | vec_setreverse4sw | Set 4 32-bit ints reversed |
+| | _mm_setr_epi64 (__m64 a) | vec_setreverse2sd | Set 2 64-bit long longs reversed |
+| | _mm_movpi64_epi64 (__m64 a) | vec_Zerouppersd | Set lower 64-bits of integer data and zero upper part |
 
 ### Store
-| veclib | SSE2      | Altivec                | Description                       |
-| --- | ------------ | ---------------------- | --------------------------------- |
-| | _mm_store_si128  | vec_store1q            | Store 128-bits integer, aligned   |
-| | _mm_storeu_si128 | vec_storeu1q           | Store 128-bits integer, unaligned |
-| | _mm_storel_epi64 | vec_storelower1sdof2sd | Store lower 64-bit long long      |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_store_si128 (__m128i* mem_addr, __m128i a) | vec_store1q | Store 128-bits integer, aligned |
+| | _mm_storeu_si128 (__mm128i* mem_addr, __m128i a) | vec_storeu1q | Store 128-bits integer, unaligned |
+| | _mm_storel_epi64 (__m128i* mem_addr, __m128i a) | vec_storelower1sdof2sd | Store lower 64-bit long long |
 
 ### Insert
-| veclib | SSE2      | Altivec             | Description                                     |
-| --- | ------------ | ------------------- | ----------------------------------------------- |
-| |                  | vec_insert4sw       | Insert 32-bit int                               |
-| |                  | vec_insert2sd       | Insert 64-bit long long                         |
-| |                  | vec_convert1swto1uq | Insert 32-bit int, zeroing upper                |
-| | _mm_insert_epi16 | vec_insert8sh       | Insert 16-bit short into one of 8 16-bit shorts |
-| |                  | vec_insert16sb      | Insert 8-bit unsigned char into one of 16 bytes |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | | vec_insert4sw (__m128i into, int from, const intlit2 element_from_right) | Insert 32-bit int |
+| | | vec_insert2sd (__m128i into, long long from, const intlit1 element_from_right) | Insert 64-bit long long |
+| | | vec_convert1swto1uq (int from) | Insert 32-bit int, zeroing upper |
+| | _mm_insert_epi16 (__m128i a, int i, int imm8) | vec_insert8sh | Insert 16-bit short into one of 8 16-bit shorts |
+| | | vec_insert16ub (__m128i v, int scalar, intlit4 element_from_right) | Insert 8-bit unsigned char into one of 16 bytes |
 
 ### Extract
-| veclib | SSE2       | Altivec                 | Description                                      |
-| --- | ------------- | ----------------------- | ------------------------------------------------ |
-| |                   | vec_extract1swfrom4sw   | Extract 32-bit int                               |
-| |                   | vec_extract1sdfrom2sd   | Extract 64-bit long long                         |
-| | _mm_extract_epi16 | vec_extract8sh          | Extract 16-bit short from one of 8 16-bit shorts |
-| | _mm_movemask_epi8 | vec_extractupperbit16sb | Extract upper bit of 16 8-bit chars              |
-| |                   | vec_extractupperbit2dp  | Extract upper bit of 2 64-bit doubles            |
-| |                   | vec_extractlowersw      | Extract lower 32-bit int                         |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | | vec_extract1swfrom4sw | Extract 32-bit int |
+| | | vec_extract1sdfrom2sd | Extract 64-bit long long |
+| | _mm_extract_epi16 | vec_extract8sh | Extract 16-bit short from one of 8 16-bit shorts |
+| | _mm_movemask_epi8 | vec_extractupperbit16sb | Extract upper bit of 16 8-bit chars |
+| | | vec_extractupperbit2dp | Extract upper bit of 2 64-bit doubles |
+| | | vec_extractlowersw | Extract lower 32-bit int |
 
 ### Convert integer to integer
 | veclib | SSE2      | Altivec           | Description                                                        |
