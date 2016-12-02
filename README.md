@@ -56,146 +56,146 @@ For big-endian platforms only the shift left/right operations are reversed.
 ### Extract
 | veclib | SSE2 | Altivec | Description |
 | --- | --- | --- | --- |
-| | | vec_extract1swfrom4sw | Extract 32-bit int |
-| | | vec_extract1sdfrom2sd | Extract 64-bit long long |
-| | _mm_extract_epi16 | vec_extract8sh | Extract 16-bit short from one of 8 16-bit shorts |
-| | _mm_movemask_epi8 | vec_extractupperbit16sb | Extract upper bit of 16 8-bit chars |
-| | | vec_extractupperbit2dp | Extract upper bit of 2 64-bit doubles |
-| | | vec_extractlowersw | Extract lower 32-bit int |
+| | | vec_extract1swfrom4sw (__m128i from, const intlit2 element_from_right) | Extract 32-bit int |
+| | | vec_extract1sdfrom2sd (__m128i from, const intlit1 element_from_right) | Extract 64-bit long long |
+| | _mm_extract_epi16 (__m128i a, int imm8) | vec_extract8sh | Extract 16-bit short from one of 8 16-bit shorts |
+| | _mm_movemask_epi8 (__m128i a) | vec_extractupperbit16sb | Extract upper bit of 16 8-bit chars |
+| | | vec_extractupperbit2dp (__m128d v) | Extract upper bit of 2 64-bit doubles |
+| | | vec_extractlowersw (__m128i from) | Extract lower 32-bit int |
 
 ### Convert integer to integer
-| veclib | SSE2      | Altivec           | Description                                                        |
-| --- | ------------ | ----------------- | ------------------------------------------------------------------ |
-| | _mm_packs_epi16  | vec_packs8hto16sb | Convert 8+8 16-bit shorts to 16 8-bit chars with signed saturation |
-| | _mm_packs_epi32  | vec_packs4wto8sh  | Convert 4+4 32-bit ints to 8 16-bit shorts with signed saturation  |
-| | _mm_packus_epi16 |                   | Convert packed 16-bit integers from a and b to packed 8-bit integers using unsigned saturation, and store the results in dst |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_packs_epi16 (__m128i a, __m128i b) | vec_packs8hto16sb | Convert 8+8 16-bit shorts to 16 8-bit chars with signed saturation |
+| | _mm_packs_epi32 (__m128i a, __m128i b) | vec_packs4wto8sh | Convert 4+4 32-bit ints to 8 16-bit shorts with signed saturation |
+| | _mm_packus_epi16 (__m128i a, __m128i b) | | Convert packed 16-bit integers from a and b to packed 8-bit integers using unsigned saturation, and store the results in dst |
 
 ### Convert floating-point to integer
-| veclib | SSE2       | Altivec                       | Description                                               |
-| --- | ------------- | ----------------------------- | --------------------------------------------------------- |
-| | _mm_cvttps_epi32  | vec_converttruncating4spto4sw | Convert 4 32-bit floats to 4 32-bit ints with truncation  |
-| | _mm_cvtps_epi32   | vec_convert4spto4sw           | Convert 4 32-bit floats to 4 32-bit ints                  |
-| | _mm_cvttpd_epi32  | vec_Convert2dpto2sw           | Convert 2 64-bit doubles to 2 32-bit ints with truncation |
-| | _mm_cvtpd_epi32   |                               | Convert packed double-precision (64-bit) floating-point elements in a to packed 32-bit integers, and store the results in dst |
-| | _mm_cvtsi32_si128 |                               | Copy 32-bit integer a to the lower element of dst, and zero the upper element |
-| | _mm_cvtsi64_si128 |                               | Copy 64-bit integer a to the lower element of dst, and zero the upper element |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_cvttps_epi32 (__m128 a) | vec_converttruncating4spto4sw | Convert 4 32-bit floats to 4 32-bit ints with truncation |
+| | _mm_cvtps_epi32 (__m128 a) | vec_convert4spto4sw | Convert 4 32-bit floats to 4 32-bit ints |
+| | _mm_cvttpd_epi32 (__m128d a) | vec_Convert2dpto2sw | Convert 2 64-bit doubles to 2 32-bit ints with truncation |
+| | _mm_cvtpd_epi32 (__m128d a) | | Convert packed double-precision (64-bit) floating-point elements in a to packed 32-bit integers, and store the results in dst |
+| | _mm_cvtsi32_si128 (int a) | | Copy 32-bit integer a to the lower element of dst, and zero the upper element |
+| | _mm_cvtsi64_si128 (int64 a) | | Copy 64-bit integer a to the lower element of dst, and zero the upper element |
 
 ### Arithmetic
-| veclib | SSE2    | Altivec                    | Description |
-| --- | ---------- | -------------------------- | ----------- |
-| | _mm_add_epi8   | vec_add16sb                | Add 16 8-bit chars |
-| | _mm_add_epi16  | vec_add8sh                 | Add 8 16-bit shorts |
-| | _mm_add_epi32  | vec_add4sw                 | Add 4 32-bit ints |
-| | _mm_add_epi64  | vec_add2sd                 | Add 2 64-bit long longs |
-| | _mm_adds_epi8  | vec_addsaturating16sb      | Add 16 8-bit chars with signed saturation |
-| | _mm_adds_epu8  | vec_addsaturating16ub      | Add 16 8-bit chars with unsigned saturation |
-| | _mm_adds_epi16 | vec_addsaturating8sh       | Add 8 16-bit shorts with signed saturation |
-| | _mm_adds_epu16 | vec_addsaturating8uh       | Add 8 16-bit shorts with unsigned saturation |
-| | _mm_sub_epi8   | vec_subtract16sb           | Subtract 16 8-bit chars |
-| | _mm_sub_epi16  | vec_subtract8sh            | Subtract 8 16-bit shorts |
-| | _mm_sub_epi32  | vec_subtract4sw            | Subtract 4 32-bit ints |
-| | _mm_sub_epi64  | vec_subtract2sd            | Subtract 2 64-bit long longs |
-| | _mm_subs_epi8  | vec_subtractsaturating16sb | Subtract 16 8-bit chars with signed saturation |
-| | _mm_subs_epu8  | vec_subtractsaturating16ub | Subtract 16 8-bit chars with unsigned saturation |
-| | _mm_subs_epi16 | vec_subtractsaturating8sh  | Subtract 8 16-bit shorts with signed saturation |
-| | _mm_subs_epu16 | vec_subtractsaturating8uh  | Subtract 8 16-bit shorts with unsigned saturation |
-| | _mm_mul_epu32  | vec_multiplylower2uwto2ud  | Multiply lower 32-bit unsigned ints producing 2 64-bit unsigned long longs |
-| | _mm_madd_epi16 | vec_multiply8sh            | Multiply 8 16-bit signed shorts |
-| | _mm_mulhi_epi16 | | Multiply the packed 16-bit integers in a and b, producing intermediate 32-bit integers, and store the high 16 bits of the intermediate integers in dst |
-| | _mm_mulhi_epu16 | | Multiply the packed unsigned 16-bit integers in a and b, producing intermediate 32-bit integers, and store the high 16 bits of the intermediate integers in dst |
-| | _mm_mullo_epi16 | | Multiply the packed 16-bit integers in a and b, producing intermediate 32-bit integers, and store the low 16 bits of the intermediate integers in dst |
-| | _mm_avg_epu8   | vec_average16ub            | Average 16 8-bit unsigned chars |
-| | _mm_avg_epu16  | vec_average8uh             | Average 8 16-bit unsigned shorts |
-| | _mm_max_epi16  | vec_max8sh                 | Max 8 16-bit shorts |
-| | _mm_max_epu8   | vec_max16ub                | Max 16 8-bit unsigned chars |
-| | _mm_min_epu8   | vec_min16ub                | Min 16 8-bit unsigned chars |
-| | _mm_min_epi16  | vec_min8sh                 | Min 8 16-bit shorts |
-| |                | vec_sumabsdiffs16ub        | Sum 2 octets of absolute differences of 16 8-bit unsigned chars into 2 64-bit long longs |
-| |                | vec_summultiply4sh         | Multiply 4 16-bit shorts then add adjacent pairs with saturation to 4 32-bit ints |
-| |                | vec_Abs16sb                | Absolute value 16 8-bit chars |
-| |                | vec_Abs8sh                 | Absolute value 8 16-bit shorts |
-| |                | vec_Abs4sw                 | Absolute value 4 32-bit ints |
-| |                | vec_horizontalAddsaturating8sh | Horizontally add 4+4 adjacent pairs of 16-bit shorts with saturation - (a0+a1, a2+a3, a4+a5, a6+a7, b0+b1, b2+b3, b4+b5, b6+b7) |
-| |                | vec_horizontalSub8sh       | Horizontally subtract 4+4 adjacent pairs of 16-bit shorts to 8 16-bit shorts - (a0-a1, a2-a3, a4-a5, a6-a7, b0-b1, b2-b3, b4-b5, b6-b7) |
-| |                | vec_partialhorizontalsubtract2sw | Horizontally subtract 2+2 adjacent pairs of 32-bit ints to 4 32-bit ints
-| |                | vec_horizontalSubtractsaturating8sh | Horizontally subtract 4+4 adjacent pairs of 16-bit shorts to 8-bit shorts with saturation - (a0+a1, a2+a3, a4+a5, a6+a7, b0+b1, b2+b3, b4+b5, b6+b7) |
-| |                | vec_Multiply16sbthenhorizontalAddsaturating8sh | Multiply 16 8-bit u*s chars then add adjacent 16-bit products with signed saturation |
-| |                | vec_Multiply8shExtractUpper | Multiply 8 16-bit shorts, shift right 14, add 1 and shift right 1 to 8 16-bit shorts |
-| |                | vec_conditionalNegate16sb | Negate 16 8-bit chars when mask is negative, zero when zero, else copy |
-| |                | vec_conditionalNegate8sh  | Negate 8 16-bit shorts when mask is negative, zero when zero, else copy |
-| |                | vec_conditionalNegate4sw  | Negate 4 32-bit ints when mask is negative, zero when zero, else copy |
-| |                | vec_multiply4sw           | Multiply 4 32-bit signed ints |
-| |                | vec_Max4sw                | Max 4 32-bit signed ints |
-| |                | vec_Min4sw                | Min 4 32-bit signed ints |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_add_epi8 (__m128i a, __m128i b) | vec_add16sb | Add 16 8-bit chars |
+| | _mm_add_epi16 (__m128i a, __m128i b) | vec_add8sh | Add 8 16-bit shorts |
+| | _mm_add_epi32 (__m128i a, __m128i b) | vec_add4sw | Add 4 32-bit ints |
+| | _mm_add_epi64 (__m128i a, __m128i b) | vec_add2sd | Add 2 64-bit long longs |
+| | _mm_adds_epi8 (__m128i a, __m128i b) | vec_addsaturating16sb | Add 16 8-bit chars with signed saturation |
+| | _mm_adds_epu8 (__m128i a, __m128i b) | vec_addsaturating16ub | Add 16 8-bit chars with unsigned saturation |
+| | _mm_adds_epi16 (__m128i a, __m128i b) | vec_addsaturating8sh | Add 8 16-bit shorts with signed saturation |
+| | _mm_adds_epu16 (__m128i a, __m128i b) | vec_addsaturating8uh | Add 8 16-bit shorts with unsigned saturation |
+| | _mm_sub_epi8 (__m128i a, __m128i b) | vec_subtract16sb | Subtract 16 8-bit chars |
+| | _mm_sub_epi16 (__m128i a, __m128i b) | vec_subtract8sh | Subtract 8 16-bit shorts |
+| | _mm_sub_epi32 (__m128i a, __m128i b) | vec_subtract4sw | Subtract 4 32-bit ints |
+| | _mm_sub_epi64 (__m128i a, __m128i b) | vec_subtract2sd | Subtract 2 64-bit long longs |
+| | _mm_subs_epi8 (__m128i a, __m128i b) | vec_subtractsaturating16sb | Subtract 16 8-bit chars with signed saturation |
+| | _mm_subs_epu8 (__m128i a, __m128i b) | vec_subtractsaturating16ub | Subtract 16 8-bit chars with unsigned saturation |
+| | _mm_subs_epi16 (__m128i a, __m128i b) | vec_subtractsaturating8sh | Subtract 8 16-bit shorts with signed saturation |
+| | _mm_subs_epu16 (__m128i a, __m128i b) | vec_subtractsaturating8uh | Subtract 8 16-bit shorts with unsigned saturation |
+| | _mm_mul_epu32 (__m128i a, __m128i b) | vec_multiplylower2uwto2ud | Multiply lower 32-bit unsigned ints producing 2 64-bit unsigned long longs |
+| | _mm_madd_epi16 (__m128i a, __m128i b) | vec_multiply8sh | Multiply 8 16-bit signed shorts |
+| | _mm_mulhi_epi16 (__m128i a, __m128i b) | | Multiply the packed 16-bit integers in a and b, producing intermediate 32-bit integers, and store the high 16 bits of the intermediate integers in dst |
+| | _mm_mulhi_epu16 (__m128i a, __m128i b) | | Multiply the packed unsigned 16-bit integers in a and b, producing intermediate 32-bit integers, and store the high 16 bits of the intermediate integers in dst |
+| | _mm_mullo_epi16 (__m128i a, __m128i b) | | Multiply the packed 16-bit integers in a and b, producing intermediate 32-bit integers, and store the low 16 bits of the intermediate integers in dst |
+| | _mm_avg_epu8 (__m128i a, __m128i b) | vec_average16ub | Average 16 8-bit unsigned chars |
+| | _mm_avg_epu16 (__m128i a, __m128i b) | vec_average8uh | Average 8 16-bit unsigned shorts |
+| | _mm_max_epi16 (__m128i a, __m128i b) | vec_max8sh | Max 8 16-bit shorts |
+| | _mm_max_epu8 (__m128i a, __m128i b) | vec_max16ub | Max 16 8-bit unsigned chars |
+| | _mm_min_epu8 (__m128i a, __m128i b) | vec_min16ub | Min 16 8-bit unsigned chars |
+| | _mm_min_epi16 (__m128i a, __m128i b) | vec_min8sh | Min 8 16-bit shorts |
+| | | vec_sumabsdiffs16ub (__m128i left, __m128i right) | Sum 2 octets of absolute differences of 16 8-bit unsigned chars into 2 64-bit long longs |
+| | | vec_summultiply4sh (__m128i left, __m128i right) | Multiply 4 16-bit shorts then add adjacent pairs with saturation to 4 32-bit ints |
+| | | vec_Abs16sb (__m128i a) | Absolute value 16 8-bit chars |
+| | | vec_Abs8sh (__m128i a) | Absolute value 8 16-bit shorts |
+| | | vec_Abs4sw (__m128i a) | Absolute value 4 32-bit ints |
+| | | vec_horizontalAddsaturating8sh (__m128i left, __m128i right) | Horizontally add 4+4 adjacent pairs of 16-bit shorts with saturation - (a0+a1, a2+a3, a4+a5, a6+a7, b0+b1, b2+b3, b4+b5, b6+b7) |
+| | | vec_horizontalSub8sh (__m128i left, __m128i right) | Horizontally subtract 4+4 adjacent pairs of 16-bit shorts to 8 16-bit shorts - (a0-a1, a2-a3, a4-a5, a6-a7, b0-b1, b2-b3, b4-b5, b6-b7) |
+| | | vec_partialhorizontalsubtract2sw (__m128i left, __m128i right) | Horizontally subtract 2+2 adjacent pairs of 32-bit ints to 4 32-bit ints
+| | | vec_horizontalSubtractsaturating8sh (__m128i left, __m128i right) | Horizontally subtract 4+4 adjacent pairs of 16-bit shorts to 8-bit shorts with saturation - (a0+a1, a2+a3, a4+a5, a6+a7, b0+b1, b2+b3, b4+b5, b6+b7) |
+| | | vec_Multiply16sbthenhorizontalAddsaturating8sh (__m128i left, __m128i right) | Multiply 16 8-bit u*s chars then add adjacent 16-bit products with signed saturation |
+| | | vec_Multiply8shExtractUpper (__m128i left, __m128i right) | Multiply 8 16-bit shorts, shift right 14, add 1 and shift right 1 to 8 16-bit shorts |
+| | | vec_conditionalNegate16sb (__m128i left, __m128i right) | Negate 16 8-bit chars when mask is negative, zero when zero, else copy |
+| | | vec_conditionalNegate8sh (__m128i left, __m128i right) | Negate 8 16-bit shorts when mask is negative, zero when zero, else copy |
+| | | vec_conditionalNegate4sw (__m128i left, __m128i right) | Negate 4 32-bit ints when mask is negative, zero when zero, else copy |
+| | | vec_multiply4sw (__m128i left, __m128i right) | Multiply 4 32-bit signed ints |
+| | | vec_Max4sw (__m128i left, __m128i right) | Max 4 32-bit signed ints |
+| | | vec_Min4sw (__m128i left, __m128i right) | Min 4 32-bit signed ints |
 
 ### Boolean
-| veclib | SSE2     | Altivec             | Description                        |
-| --- | ----------- | ------------------- | ---------------------------------- |
-| | _mm_and_si128   | vec_bitand1q        | Bitwise 128-bit and                |
-| | _mm_andnotsi128 | vec_bitandnotleft1q | Bitwise 128-bit and not (reversed) |
-| | _mm_or_si128    | vec_bitor1q         | Bitwise 128-bit or                 |
-| | _mm_xor_si128   | vec_bitxor1q        | Bitwise 128-bit xor                |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_and_si128 (__m128i a, __m128i b) | vec_bitand1q | Bitwise 128-bit and |
+| | _mm_andnotsi128 (__m128i a, __m128i b) | vec_bitandnotleft1q | Bitwise 128-bit and not (reversed) |
+| | _mm_or_si128 (__m128i a, __m128i b) | vec_bitor1q | Bitwise 128-bit or |
+| | _mm_xor_si128 (__m128i a, __m128i b) | vec_bitxor1q | Bitwise 128-bit xor |
 
 ### Unpack
-| veclib | SSE2        | Altivec           | Description                                                  |
-| --- | -------------- | ----------------- | ------------------------------------------------------------ |
-| | _mm_unpackhi_epi8  | vec_unpackhigh8sb | Unpack 8+8 8-bit chars from high halves and interleave       |
-| | _mm_unpackhi_epi16 | vec_unpackhigh4sh | Unpack 4+4 16-bit shorts from high halves and interleave     |
-| | _mm_unpacklo_epi8  | vec_unpacklow8sb  | Unpack 8+8 8-bit chars from low halves and interleave        |
-| | _mm_unpacklo_epi16 | vec_unpacklow4sh  | Unpack 4+4 16-bit shorts from low halves and interleave      |
-| | _mm_unpacklo_epi32 | vec_unpacklow2sw  | Unpack 2+2 32-bit ints from low halves and interleave        |
-| | _mm_unpackhi_epi32 | vec_unpackhigh2sw | Unpack 2+2 32-bit ints from high halves and interleave       |
-| | _mm_unpacklo_epi64 | vec_unpacklow1sd  | Unpack 1+1 64-bit long longs from low halves and interleave  |
-| | _mm_unpackhi_epi64 | vec_unpackhigh1sd | Unpack 1+1 64-bit long longs from high halves and interleave |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_unpackhi_epi8 (__m128i a, __m128i b) | vec_unpackhigh8sb | Unpack 8+8 8-bit chars from high halves and interleave |
+| | _mm_unpackhi_epi16 (__m128i a, __m128i b) | vec_unpackhigh4sh | Unpack 4+4 16-bit shorts from high halves and interleave |
+| | _mm_unpacklo_epi8 (__m128i a, __m128i b) | vec_unpacklow8sb | Unpack 8+8 8-bit chars from low halves and interleave |
+| | _mm_unpacklo_epi16 (__m128i a, __m128i b) | vec_unpacklow4sh | Unpack 4+4 16-bit shorts from low halves and interleave |
+| | _mm_unpacklo_epi32 (__m128i a, __m128i b) | vec_unpacklow2sw | Unpack 2+2 32-bit ints from low halves and interleave |
+| | _mm_unpackhi_epi32 (__m128i a, __m128i b) | vec_unpackhigh2sw | Unpack 2+2 32-bit ints from high halves and interleave |
+| | _mm_unpacklo_epi64 (__m128i a, __m128i b) | vec_unpacklow1sd | Unpack 1+1 64-bit long longs from low halves and interleave |
+| | _mm_unpackhi_epi64 (__m128i a, __m128i b) | vec_unpackhigh1sd | Unpack 1+1 64-bit long longs from high halves and interleave |
 
 ### Shift
-| veclib | SSE2     | Altivec                             | Description                                       |
-| --- | ----------- | ----------------------------------- | ------------------------------------------------- |
-| | _mm_sll_epi16   | vec_shiftleft8sh                    | Shift 8 16-bit shorts left logical                |
-| | _mm_sll_epi32   | vec_shiftleft4sw                    | Shift 4 32-bit ints left logical                  |
-| | _mm_sll_epi64   | vec_shiftleft2sd                    | Shift 2 64-bit long longs left logical            |
-| | _mm_slli_epi16  | vec_shiftleftimmediate8sh           | Shift 8 16-bit shorts left logical immediate      |
-| | _mm_slli_epi32  | vec_shiftleftimmediate4sw           | Shift 4 32-bit ints left logical immediate        |
-| | _mm_slli_epi64  | vec_shiftleftimmediate2sd           | Shift 2 64-bit long longs left logical immediate  |
-| | _mm_slli_si128  | vec_shiftleftbytes1q                | Shift 128-bits left logical immediate by bytes    |
-| | _mm_srl_epi16   | vec_shiftright8sh                   | Shift 8 16-bit shorts right logical               |
-| | _mm_srl_epi32   | vec_shiftright4sw                   | Shift 4 32-bit ints right logical                 |
-| | _mm_srl_epi64   | vec_shiftright2sd                   | Shift 2 64-bit long longs right logical           |
-| | _mm_srli_epi16  | vec_shiftrightimmediate8sh          | Shift 8 16-bit shorts right logical immediate     |
-| | _mm_srli_epi32  | vec_shiftrightimmediate4sw          | Shift 4 32-bit ints right logical immediate       |
-| | _mm_srli_epi64  |                                     | Shift 2 64-bit long longs right logical immediate |
-| | _mm_srli_si128  | vec_shiftrightbytes1q               | Shift 128-bits right logical immediate by bytes   |
-| |                 | vec_shiftrightarithmetic4wimmediate | Shift 4 32-bit ints right arithmetic              |
-| |                 | vec_shiftrightlogical2dimmediate    | Shift 2 64-bit long longs right logical immediate |
-| |                 | vec_shiftrightarithmetic8himmediate | Shift 8 16-bit shorts right arithmetic            |
-| |                 | vec_shiftrightarithmetic4sw         | Shift 4 32-bit ints left logical                  |
-| |                 | vec_shiftright2dqw                  | Shift 128+128-bits right into 128-bits            |
-| | _mm_bslli_si128 |                                     | Shift a left by imm8 bytes while shifting in zeros, and store the results in dst |
-| | _mm_bsrli_si128 |                                     | Shift a right by imm8 bytes while shifting in zeros, and store the results in dst |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_sll_epi16 (__m128i a, int imm8) | vec_shiftleft8sh | Shift 8 16-bit shorts left logical |
+| | _mm_sll_epi32 (__m128i a, int imm8) | vec_shiftleft4sw | Shift 4 32-bit ints left logical |
+| | _mm_sll_epi64 (__m128i a, int imm8) | vec_shiftleft2sd | Shift 2 64-bit long longs left logical |
+| | _mm_slli_epi16 (__m128i a, int imm8) | vec_shiftleftimmediate8sh | Shift 8 16-bit shorts left logical immediate |
+| | _mm_slli_epi32 (__m128i a, int imm8) | vec_shiftleftimmediate4sw | Shift 4 32-bit ints left logical immediate |
+| | _mm_slli_epi64 (__m128i a, int imm8) | vec_shiftleftimmediate2sd | Shift 2 64-bit long longs left logical immediate |
+| | _mm_slli_si128 (__m128i a, int imm8) | vec_shiftleftbytes1q | Shift 128-bits left logical immediate by bytes |
+| | _mm_srl_epi16 (__m128i a, int imm8) | vec_shiftright8sh | Shift 8 16-bit shorts right logical |
+| | _mm_srl_epi32 (__m128i a, int imm8) | vec_shiftright4sw | Shift 4 32-bit ints right logical |
+| | _mm_srl_epi64 (__m128i a, int imm8) | vec_shiftright2sd | Shift 2 64-bit long longs right logical |
+| | _mm_srli_epi16 (__m128i a, int imm8) | vec_shiftrightimmediate8sh | Shift 8 16-bit shorts right logical immediate |
+| | _mm_srli_epi32 (__m128i a, int imm8) | vec_shiftrightimmediate4sw | Shift 4 32-bit ints right logical immediate |
+| | _mm_srli_epi64 (__m128i a, int imm8) | | Shift 2 64-bit long longs right logical immediate |
+| | _mm_srli_si128 (__m128i a, int imm8) | vec_shiftrightbytes1q | Shift 128-bits right logical immediate by bytes |
+| | | vec_shiftrightarithmetic4wimmediate (__m128i v, intlit8 count) | Shift 4 32-bit ints right arithmetic |
+| | | vec_shiftrightlogical2dimmediate (__m128i v, intlit8 count) | Shift 2 64-bit long longs right logical immediate |
+| | | vec_shiftrightarithmetic8himmediate (__m128i v, intlit8 count) | Shift 8 16-bit shorts right arithmetic |
+| | | vec_shiftrightarithmetic4sw (__m128i v, intlit8 count) | Shift 4 32-bit ints left logical |
+| | | vec_shiftright2dqw (__m128i left, __m128i right, int const count) | Shift 128+128-bits right into 128-bits |
+| | _mm_bslli_si128 (__m128i a, int imm8) | | Shift a left by imm8 bytes while shifting in zeros, and store the results in dst |
+| | _mm_bsrli_si128 (__m128i a, int imm8) | | Shift a right by imm8 bytes while shifting in zeros, and store the results in dst |
 
 ### Permute
-| veclib | SSE2         | Altivec             | Description                                                            |
-| --- | --------------- | ------------------- | ---------------------------------------------------------------------- |
-| | _mm_shufflehi_epi16 |                     | Shuffle 16-bit integers in the high 64 bits of a using the control in imm8. Store the results in the high 64 bits of dst, with the low 64 bits being copied from from a to dst |
+| veclib | SSE2 | Altivec | Description |
+| --- | ---| --- | --- |
+| | _mm_shufflehi_epi16 (__m128i a, int imm8) | | Shuffle 16-bit integers in the high 64 bits of a using the control in imm8. Store the results in the high 64 bits of dst, with the low 64 bits being copied from from a to dst |
 | | _mm_shufflelo_epi16 | vec_permutelower4sh | Shuffle lower 4 16-bit shorts using mask, leaving upper half unchanged |
-| | _mm_shuffle_epi32   | vec_permute4sw      | Shuffle 4 32-bit ints using mask                                       |
-| |                     | vec_permute16sb     | Shuffle 16 8-bit chars using mask                                      |
+| | _mm_shuffle_epi32 (__m128i a, int imm8) | vec_permute4sw | Shuffle 4 32-bit ints using mask |
+| | | vec_permute16sb (__m128i v, __m128i mask) | Shuffle 16 8-bit chars using mask |
 
 ### Compare
-| veclib | SSE2     | Altivec           | Description                                   |
-| --- | ----------- | ----------------- | --------------------------------------------- |
-| | _mm_cmpeq_epi8  | vec_compareeq16sb | Compare 16 8-bit chars for == to vector mask  |
-| | _mm_cmpeq_epi16 | vec_compareeq8sh  | Compare 8 16-bit shorts for == to vector mask |
-| | _mm_cmpeq_epi32 | vec_compareeq4sw  | Compare 4 32-bit ints for == to vector mask   |
-| | _mm_cmplt_epi8  | vec_comparelt16sb | Compare 16 8-bit chars for < to vector mask   |
-| | _mm_cmplt_epi16 | vec_comparelt8sh  | Compare 8 16-bit shorts for < to vector mask  |
-| | _mm_cmplt_epi32 | vec_comparelt4sw  | Compare 4 32-bit ints for < to vector mask    |
-| | _mm_cmpgt_epi8  | vec_comparegt16sb | Compare 16 8-bit chars for > to vector mask   |
-| | _mm_cmpgt_epi16 | vec_comparegt8sh  | Compare 8 16-bit shorts for > to vector mask  |
-| | _mm_cmpgt_epi32 | vec_comparegt4sw  | Compare 4 32-bit ints for > to vector mask    |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_cmpeq_epi8 (__m128i a, __m128i b) | vec_compareeq16sb | Compare 16 8-bit chars for == to vector mask |
+| | _mm_cmpeq_epi16 (__m128i a, __m128i b) | vec_compareeq8sh | Compare 8 16-bit shorts for == to vector mask |
+| | _mm_cmpeq_epi32 (__m128i a, __m128i b) | vec_compareeq4sw | Compare 4 32-bit ints for == to vector mask |
+| | _mm_cmplt_epi8 (__m128i a, __m128i b) | vec_comparelt16sb | Compare 16 8-bit chars for < to vector mask |
+| | _mm_cmplt_epi16 (__m128i a, __m128i b) | vec_comparelt8sh | Compare 8 16-bit shorts for < to vector mask |
+| | _mm_cmplt_epi32 (__m128i a, __m128i b) | vec_comparelt4sw | Compare 4 32-bit ints for < to vector mask |
+| | _mm_cmpgt_epi8 (__m128i a, __m128i b) | vec_comparegt16sb | Compare 16 8-bit chars for > to vector mask |
+| | _mm_cmpgt_epi16 (__m128i a, __m128i b) | vec_comparegt8sh | Compare 8 16-bit shorts for > to vector mask |
+| | _mm_cmpgt_epi32 (__m128i a, __m128i b) | vec_comparegt4sw | Compare 4 32-bit ints for > to vector mask |
 
 ### Cast
-| veclib | SSE2      | Altivec          | Description             |
-| --- | ------------ | ---------------- | ----------------------- |
-| | _mm_castps_si128 | vec_cast4spto1q  | Cast __m128 to __m128i  |
-| | _mm_castpd_si128 | vec_Cast2dpto4sw | Cast __m128d to __m128i |
+| veclib | SSE2 | Altivec | Description |
+| --- | --- | --- | --- |
+| | _mm_castps_si128 (__m128 a) | vec_cast4spto1q | Cast __m128 to __m128i |
+| | _mm_castpd_si128 (__m128d a) | vec_Cast2dpto4sw | Cast __m128d to __m128i |
