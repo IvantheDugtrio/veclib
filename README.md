@@ -14,27 +14,27 @@ For big-endian platforms only the shift left/right operations are reversed.
 ### Load
 | veclib | SSE2     | Altivec          | Description                                                    |
 | --- | ----------- | ---------------- | -------------------------------------------------------------- |
-| | _mm_load_si128  | vec_load1q       | Load 128 bits of integer data, aligned                         |
-| | _mm_loadu_si128 | vec_loadu1q      | Load 128 bits of integer data, unaligned                       |
-| | _mm_loadl_epi64 | vec_loadlower1sd | Load 64-bits of integer data to lower part and zero upper part |
+| | _mm_load_si128 (__m128i const* mem_addr) | vec_load1q       | Load 128 bits of integer data, aligned                         |
+| | _mm_loadu_si128 (__m128i const* mem_addr) | vec_loadu1q      | Load 128 bits of integer data, unaligned                       |
+| | _mm_loadl_epi64 (__m128i const* mem_addr) | vec_loadlower1sd | Load 64-bits of integer data to lower part and zero upper part |
 
 ### Set
 | veclib | SSE2       | Altivec            | Description                                           |
 | --- | ------------- | ------------------ | ----------------------------------------------------- |
-| | _mm_setzero_si128 | vec_zero1q         | Set 128 integer bits to zero                          |
-| | _mm_set1_epi8     | vec_splat16sb      | Splat 8-bit char to 16 8-bit chars                    |
-| | _mm_set1_epi16    | vec_splat8sh       | Splat 16-bit short to 8 16-bit shorts                 |
-| | _mm_set1_epi32    | vec_splat4sw       | Splat 32-bit ints to 4 32-bit ints                    |
-| | _mm_set1_epi64    | vec_splat2sd       | Splat 64-bit long long to 2 64-bit long longs         |
-| | _mm_set_epi8      | vec_set16sb        | Set 16 8-bit chars                                    |
-| | _mm_set_epi16     | vec_set8sh         | Set 8 16-bits shorts                                  |
-| | _mm_set_epi32     | vec_set4sw         | Set 4 32-bit ints                                     |
-| | _mm_set_epi64     | vec_set2sd         | Set 2 64-bit long longs                               |
-| | _mm_setr_epi8     | vec_setreverse16sb | Set 16 8-bit chars reversed                           |
-| | _mm_setr_epi16    | vec_setreverse8sh  | Set 8 16-bit shorts reversed                          |
-| | _mm_setr_epi32    | vec_setreverse4sw  | Set 4 32-bit ints reversed                            |
-| | _mm_setr_epi64    | vec_setreverse2sd  | Set 2 64-bit long longs reversed                      |
-| | _mm_movpi64_epi64 | vec_Zerouppersd    | Set lower 64-bits of integer data and zero upper part |
+| | _mm_setzero_si128 () | vec_zero1q         | Set 128 integer bits to zero                          |
+| | _mm_set1_epi8 (char a) | vec_splat16sb      | Splat 8-bit char to 16 8-bit chars                    |
+| | _mm_set1_epi16 (short a) | vec_splat8sh       | Splat 16-bit short to 8 16-bit shorts                 |
+| | _mm_set1_epi32 (int a) | vec_splat4sw       | Splat 32-bit ints to 4 32-bit ints                    |
+| | _mm_set1_epi64 (__m64 a) | vec_splat2sd       | Splat 64-bit long long to 2 64-bit long longs         |
+| | _mm_set_epi8 (char a) | vec_set16sb        | Set 16 8-bit chars                                    |
+| | _mm_set_epi16 (short a) | vec_set8sh         | Set 8 16-bits shorts                                  |
+| | _mm_set_epi32 (int a) | vec_set4sw         | Set 4 32-bit ints                                     |
+| | _mm_set_epi64 (__m64 a) | vec_set2sd         | Set 2 64-bit long longs                               |
+| | _mm_setr_epi8 (char a) | vec_setreverse16sb | Set 16 8-bit chars reversed                           |
+| | _mm_setr_epi16 (short a) | vec_setreverse8sh  | Set 8 16-bit shorts reversed                          |
+| | _mm_setr_epi32 (int a) | vec_setreverse4sw  | Set 4 32-bit ints reversed                            |
+| | _mm_setr_epi64 (__m64 a) | vec_setreverse2sd  | Set 2 64-bit long longs reversed                      |
+| | _mm_movpi64_epi64 (__m64 a) | vec_Zerouppersd    | Set lower 64-bits of integer data and zero upper part |
 
 ### Store
 | veclib | SSE2      | Altivec                | Description                       |
