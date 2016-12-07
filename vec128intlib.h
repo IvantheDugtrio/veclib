@@ -2,8 +2,8 @@
 // file. These can be obtained from the IBM developerWorks website at:
 // https://www.ibm.com/developerworks/community/groups/community/powerveclib/
 
+#pragma once
 #include "vec128int.h"
-#include "veclib_types.h"
 
 // Vector Integer Operations
 // Preliminary testing
@@ -50,44 +50,44 @@ __m128i _mm_set1_epi64 (__m64 scalar)
     return vec_splat2sd (scalar);
 }
 
-__m128i _mm_set_epi8 (char scalar)
+__m128i _mm_set_epi8 (char c15, char c14, char c13, char c12, char c11, char c10, char c9, char c8, char c7, char c6, char c5, char c4, char c3, char c2, char c1, char c0)
 {
-    return vec_set16sb (scalar);
+    return vec_set16sb (c15, c14, c13, c12, c11, c10, c9, c8, c7, c6, c5, c4, c3, c2, c1, c0);
 }
 
-__m128i _mm_set_epi16 (short scalar)
+__m128i _mm_set_epi16 (short s7, short s6, short s5, short s4, short s3, short s2, short s1, short s0)
 {
-    return vec_set8sh (scalar);
+    return vec_set8sh (s7, s6, s5, s4, s3, s2, s1, s0);
 }
 
-__m128i _mm_set_epi32 (int scalar)
+__m128i _mm_set_epi32 (int i3, int i2, int i1, int i0)
 {
-    return vec_set4sw (scalar);
+    return vec_set4sw (i3, i2, i1, i0);
 }
 
-__m128i _mm_set_epi64 (__m64 scalar)
+__m128i _mm_set_epi64 (__m64 l1, __m64 l0)
 {
-    return vec_set2sd (scalar);
+    return vec_set2sd (l1, l0);
 }
 
-__m128i _mm_setr_epi8 (char scalar)
+__m128i _mm_setr_epi8 (char c15, char c14, char c13, char c12, char c11, char c10, char c9, char c8, char c7, char c6, char c5, char c4, char c3, char c2, char c1, char c0)
 {
-    return vec_setreverse16sb (scalar);
+    return vec_setreverse16sb (c15, c14, c13, c12, c11, c10, c9, c8, c7, c6, c5, c4, c3, c2, c1, c0);
 }
 
-__m128i _mm_setr_epi16 (short scalar)
+__m128i _mm_setr_epi16 (short s7, short s6, short s5, short s4, short s3, short s2, short s1, short s0)
 {
-    return vec_setreverse8sh (scalar);
+    return vec_setreverse8sh (s7, s6, s5, s4, s3, s2, s1, s0);
 }
 
-__m128i _mm_setr_epi32 (int scalar)
+__m128i _mm_setr_epi32 (int i3, int i2, int i1, int i0)
 {
-    return vec_setreverse4sw (scalar);
+    return vec_setreverse4sw (i3, i2, i1, i0);
 }
 
-__m128i _mm_setr_epi64 (__m64 scalar)
+__m128i _mm_setr_epi64 (__m64 l1, __m64 l0)
 {
-    return vec_setreverse2sd (scalar);
+    return vec_setreverse2sd (l1, l0);
 }
 
 __m128i _mm_movpi64_epi64 (__m128i v)
@@ -96,17 +96,17 @@ __m128i _mm_movpi64_epi64 (__m128i v)
 }
 
 // Store
-__m128i _mm_store_si128 (__m128i* address, __m128i v)
+void _mm_store_si128 (__m128i* address, __m128i v)
 {
     return vec_store1q (address, v);
 }
 
-__m128i _mm_storeu_si128 (__m128i* to, __m128i from)
+void _mm_storeu_si128 (__m128i* to, __m128i from)
 {
     return vec_storeu1q (to, from);
 }
 
-__m128i _mm_storel_epi64 (__m128i* to, __m128i from)
+void _mm_storel_epi64 (__m128i* to, __m128i from)
 {
     return vec_storelower1sdof2sd (to, from);
 }
@@ -120,12 +120,12 @@ __m128i _mm_insert_epi16 (__m128i v, int scalar, intlit3 element_from_right)
 
 // Extract
 // Additional Altivec commands to be ported - WIP
-__m128i _mm_extract_epi16 (__m128i v, intlit3 element_from_right)
+int _mm_extract_epi16 (__m128i v, int element_from_right)
 {
     return vec_extract8sh (v, element_from_right);
 }
 
-__m128i _mm_movemask_epi8 (__m128i v)
+int _mm_movemask_epi8 (__m128i v)
 {
     return vec_extractupperbit16sb (v);
 }
@@ -144,17 +144,17 @@ __m128i _mm_packs_epi32 (__m128i left, __m128i right)
 
 // Convert floating-point to integer
 // Addtional SSE2 commands to be ported - WIP
-__m128i _mm_cvttps_epi32 (__m128i a)
+__m128i _mm_cvttps_epi32 (__m128 a)
 {
     return vec_converttruncating4spto4sw (a);
 }
 
-__m128i _mm_cvtps_epi32 (__m128i from)
+__m128i _mm_cvtps_epi32 (__m128 from)
 {
     return vec_convert4spto4sw (from);
 }
 
-__m128i _mm_cvttpd_epi32 (__m128i from)
+__m128i _mm_cvttpd_epi32 (__m128d from)
 {
     return vec_Convert2dpto2sw (from);
 }
@@ -186,19 +186,19 @@ __m128i _mm_adds_epi8 (__m128i left, __m128i right)
     return vec_addsaturating16sb (left, right);
 }
 
+__m128i _mm_adds_epu8 (__m128i left, __m128i right)
+{
+    return vec_addsaturating16ub (left, right);
+}
+
 __m128i _mm_adds_epi16 (__m128i left, __m128i right)
 {
     return vec_addsaturating8sh (left, right);
 }
 
-__m128i _mm_adds_epi32 (__m128i left, __m128i right)
+__m128i _mm_adds_epu16 (__m128i left, __m128i right)
 {
-    return vec_addsaturating4sw (left, right);
-}
-
-__m128i _mm_adds_epi64 (__m128i left, __m128i right)
-{
-    return vec_addsaturating2sd (left, right);
+    return vec_addsaturating8uh (left, right);
 }
 
 __m128i _mm_sub_epi8 (__m128i left, __m128i right)
@@ -361,17 +361,17 @@ __m128i _mm_sll_epi64 (__m128i v, __m128i count)
     return vec_shiftright2sd (v, count);
 }
 
-__m128i _mm_slli_epi16 (__m128i v, __m128i count)
+__m128i _mm_slli_epi16 (__m128i v, int count)
 {
-    return vec_shiftimmediateright8sh (v, count);
+    return vec_shiftrightimmediate8sh (v, count);
 }
 
-__m128i _mm_slli_epi32 (__m128i v, __m128i count)
+__m128i _mm_slli_epi32 (__m128i v, int count)
 {
-    return vec_shiftimmediateright4sw (v, count);
+    return vec_shiftrightimmediate4sw (v, count);
 }
 
-__m128i _mm_slli_si128 (__m128i v, intlit8 bytecount);
+__m128i _mm_slli_si128 (__m128i v, int bytecount)
 {
     return vec_shiftrightbytes1q (v, bytecount);
 }
@@ -391,22 +391,22 @@ __m128i _mm_srl_epi64 (__m128i v, __m128i count)
     return vec_shiftleft2sd (v, count);
 }
 
-__m128i _mm_srli_epi16 (__m128i v, __m128i count)
+__m128i _mm_srli_epi16 (__m128i v, int count)
 {
-    return vec_shiftimmediateleft8sh (v, count);
+    return vec_shiftleftimmediate8sh (v, count);
 }
 
-__m128i _mm_srli_epi32 (__m128i v, __m128i count)
+__m128i _mm_srli_epi32 (__m128i v, int count)
 {
-    return vec_shiftimmediateleft4sw (v, count);
+    return vec_shiftleftimmediate4sw (v, count);
 }
 
-__m128i _mm_srli_epi64 (__m128i v, __m128i count)
+__m128i _mm_srli_epi64 (__m128i v, int count)
 {
-    return vec_shiftimmediateleft2sd (v, count);
+    return vec_shiftleftimmediate2sd (v, count);
 }
 
-__m128i _mm_srli_si128 (__m128i v, intlit8 bytecount)
+__m128i _mm_srli_si128 (__m128i v, int bytecount)
 {
     return vec_shiftleftbytes1q (v, bytecount);
 }
@@ -503,7 +503,7 @@ __m128i _mm_cmpeq_epi16 (__m128i left, __m128i right)
 
 __m128i _mm_cmpeq_epi32 (__m128i left, __m128i right)
 {
-    return vec_compareeq4sw (left, right);
+    return vec_compare4sw (left, right);
 }
 
 __m128i _mm_cmplt_epi8 (__m128i left, __m128i right)
@@ -542,7 +542,7 @@ __m128i _mm_castps_si128 (__m128 v)
     return vec_cast4spto1q (v);
 }
 
-__m128i _mm_castpd_si128 (__m128 v)
+__m128i _mm_castpd_si128 (__m128d v)
 {
     return vec_Cast2dpto4sw (v);
 }
