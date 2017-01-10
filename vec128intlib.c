@@ -175,10 +175,12 @@ __m128i _mm_add_epi32 (__m128i left, __m128i right)
     return vec_add4sw (left, right);
 }
 
+#ifdef __POWER8__
 __m128i _mm_add_epi64 (__m128i left, __m128i right)
 {
     return vec_add2sd (left, right);
 }
+#endif
 
 __m128i _mm_adds_epi8 (__m128i left, __m128i right)
 {
@@ -215,10 +217,12 @@ __m128i _mm_sub_epi32 (__m128i left, __m128i right)
     return vec_subtract4sw (left, right);
 }
 
+#ifdef __POWER8__
 __m128i _mm_sub_epi64 (__m128i left, __m128i right)
 {
     return vec_subtract2sd (left, right);
 }
+#endif
 
 __m128i _mm_subs_epi8 (__m128i left, __m128i right)
 {
@@ -355,10 +359,12 @@ __m128i _mm_sll_epi32 (__m128i v, __m128i count)
     return vec_shiftright4sw (v, count);
 }
 
+#ifdef __POWER8__
 __m128i _mm_sll_epi64 (__m128i v, __m128i count)
 {
     return vec_shiftright2sd (v, count);
 }
+#endif
 
 __m128i _mm_slli_epi16 (__m128i v, int count)
 {
@@ -385,10 +391,12 @@ __m128i _mm_srl_epi32 (__m128i v, __m128i count)
     return vec_shiftleft4sw (v, count);
 }
 
+#ifdef __POWER8__
 __m128i _mm_srl_epi64 (__m128i v, __m128i count)
 {
     return vec_shiftleft2sd (v, count);
 }
+#endif
 
 __m128i _mm_srli_epi16 (__m128i v, int count)
 {

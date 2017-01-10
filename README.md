@@ -4,8 +4,9 @@ Vector library for porting SSE2 instructions to other architectures
 Credit to yhcheng for first providing a PPC64 port of the Burrows-Wheeler Aligner which helped me expand on the instructions. 
 PPC64 Altivec instructions are provided in vec128int.h which depends on veclib_types.h.
 
-To use in a project that uses SSE2 instructions simply place vec128int.h, vec128intlib.c, vec128intlib.h, and vec_libtypes.h in the same directory your C/C++ source file calling SSE2 instructions is in. Replace all instances of #include <emmintrin.h> with #include "vec128intlib.h" and it should compile fine. 
+To use in a project that uses SSE2 instructions simply place vec128int.h, vec128intlib.c, vec128intlib.h, and vec_libtypes.h in the same directory your C/C++ source file calling SSE2 instructions is in. Replace all instances of #include <emmintrin.h> with #include "vec128intlib.h". Add vec128intlib.o to the makefile and it should compile fine.
 Note that not all SSE2 instructions have been ported over so you may get errors for those functions.
+Also some instructions only work on POWER8 or newer. Those instructions are marked in vec128intlib.c and vec128intlib.h.
 
 The IBM POWER vector intrinsinc functions library can be downloaded from the [IBM developerWorks website](https://www.ibm.com/developerworks/community/groups/community/powerveclib/).
 
