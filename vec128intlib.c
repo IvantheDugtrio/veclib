@@ -449,7 +449,7 @@ __m128i _mm_slli_epi64 (__m128i v, __m128i count)
     return vec_shiftimmediateleft2sd (v, count);
 }
 
-__m128i _mm_slli_si128 (__m128i v, intlit8 bytecount);
+__m128i _mm_slli_si128 (__m128i v, intlit8 bytecount)
 {
     return vec_shiftleftbytes1q (v, bytecount);
 }
