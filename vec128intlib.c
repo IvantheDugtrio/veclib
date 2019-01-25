@@ -2,6 +2,7 @@
 // file. These can be obtained from the IBM developerWorks website at:
 // https://www.ibm.com/developerworks/community/groups/community/powerveclib/
 
+#include "altivec.h"
 #include "vec128intlib.h"
 
 // Vector Integer Operations
@@ -158,6 +159,11 @@ __m128i _mm_cvttpd_epi32 (__m128d from)
     return vec_Convert2dpto2sw (from);
 }
 
+__m128i _mm_cvtsi32_si128 (int __A)
+{
+   return _mm_set_epi32 (0, 0, 0, __A);
+}
+
 // Arithmetic
 // Additional Altivec and SSE2 commands to be ported - WIP
 __m128i _mm_add_epi8 (__m128i left, __m128i right)
@@ -290,7 +296,7 @@ __m128i _mm_and_si128 (__m128i left, __m128i right)
     return vec_bitand1q (left, right);
 }
 
-__m128i _mm_andnotsi128 (__m128i left, __m128i right)
+__m128i _mm_andnot_si128 (__m128i left, __m128i right)
 {
     return vec_bitandnotleft1q (left, right);
 }
@@ -434,19 +440,19 @@ __m128i _mm_sll_epi64 (__m128i v, __m128i count)
     return vec_shiftleft2sd (v, count);
 }
 
-__m128i _mm_slli_epi16 (__m128i v, __m128i count)
+__m128i _mm_slli_epi16 (__m128i v, intlit8 count)
 {
-    return vec_shiftimmediateleft8sh (v, count);
+    return vec_shiftleftimmediate8sh (v, count);
 }
 
-__m128i _mm_slli_epi32 (__m128i v, __m128i count)
+__m128i _mm_slli_epi32 (__m128i v, intlit8 count)
 {
-    return vec_shiftimmediateleft4sw (v, count);
+    return vec_shiftleftimmediate4sw (v, count);
 }
 
-__m128i _mm_slli_epi64 (__m128i v, __m128i count)
+__m128i _mm_slli_epi64 (__m128i v, intlit8 count)
 {
-    return vec_shiftimmediateleft2sd (v, count);
+    return vec_shiftleftimmediate2sd (v, count);
 }
 
 __m128i _mm_slli_si128 (__m128i v, intlit8 bytecount)
@@ -469,14 +475,14 @@ __m128i _mm_srl_epi64 (__m128i v, __m128i count)
     return vec_shiftright2sd (v, count);
 }
 
-__m128i _mm_srli_epi16 (__m128i v, __m128i count)
+__m128i _mm_srli_epi16 (__m128i v, intlit8 count)
 {
-    return vec_shiftimmediateright8sh (v, count);
+    return vec_shiftrightimmediate8sh (v, count);
 }
 
-__m128i _mm_srli_epi32 (__m128i v, __m128i count)
+__m128i _mm_srli_epi32 (__m128i v, intlit8 count)
 {
-    return vec_shiftimmediateright4sw (v, count);
+    return vec_shiftrightimmediate4sw (v, count);
 }
 
 __m128i _mm_srli_si128 (__m128i v, intlit8 bytecount)
