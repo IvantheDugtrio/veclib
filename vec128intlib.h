@@ -76,6 +76,8 @@ __m128i _mm_cvtps_epi32 (__m128 from);
 
 __m128i _mm_cvttpd_epi32 (__m128d from);
 
+__m128i _mm_cvtsi32_si128 (int __A);
+
 // Arithmetic
 // Additional Altivec and SSE2 commands to be ported - WIP
 __m128i _mm_add_epi8 (__m128i left, __m128i right);
@@ -133,7 +135,7 @@ __m128i _mm_min_epi16 (__m128i left, __m128i right);
 // Boolean
 __m128i _mm_and_si128 (__m128i left, __m128i right);
 
-__m128i _mm_andnotsi128 (__m128i left, __m128i right);
+__m128i _mm_andnot_si128 (__m128i left, __m128i right);
 
 __m128i _mm_or_si128 (__m128i left, __m128i right);
 
@@ -196,11 +198,11 @@ __m128i _mm_sll_epi32 (__m128i v, __m128i count);
 
 __m128i _mm_sll_epi64 (__m128i v, __m128i count);
 
-__m128i _mm_slli_epi16 (__m128i v, __m128i count);
+__m128i _mm_slli_epi16 (__m128i v, intlit8 count);
 
-__m128i _mm_slli_epi32 (__m128i v, __m128i count);
+__m128i _mm_slli_epi32 (__m128i v, intlit8 count);
 
-__m128i _mm_slli_epi64 (__m128i v, __m128i count);
+__m128i _mm_slli_epi64 (__m128i v, intlit8 count);
 
 __m128i _mm_slli_si128 (__m128i v, intlit8 bytecount);;
 
@@ -210,9 +212,9 @@ __m128i _mm_srl_epi32 (__m128i v, __m128i count);
 
 __m128i _mm_srl_epi64 (__m128i v, __m128i count);
 
-__m128i _mm_srli_epi16 (__m128i v, __m128i count);
+__m128i _mm_srli_epi16 (__m128i v, intlit8 count);
 
-__m128i _mm_srli_epi32 (__m128i v, __m128i count);
+__m128i _mm_srli_epi32 (__m128i v, intlit8 count);
 
 __m128i _mm_srli_si128 (__m128i v, intlit8 bytecount);
 
